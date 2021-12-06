@@ -77,7 +77,7 @@ if __name__=='__main__':
 		out.write('move z {:.2f} 1 models #{:d}; wait;\n'.format(originAngst[2], i))
 
 		
-	
+	out.write('center #0')
 	out.close()
 
 	
