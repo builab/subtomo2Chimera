@@ -19,7 +19,7 @@ relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_chimera.cxc --a
 *-tomoname* Name of tomo for the visualization
 
 
-The subtomogram average name is avg.mrc by default. You need to adjust the level of the average in output Chimera loading script.
+The subtomogram average name is avg.mrc by default. You need to adjust the level of the average in output Chimera loading script. You can use the exact command about to test the example of ribosome subtomo average from EMPIAR-10064.
 The output Chimera loading script uses a lot of memory due to many subtomograms. Therefore, try to make the avg.mrc file as small as possible. It doesn't have to be the same pixel size as the star file data.
 
 NOTE: The Chimera version also works but very clumpsy.
