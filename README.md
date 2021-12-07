@@ -34,15 +34,11 @@ NOTE: The Chimera version of the script also works to a certain degree but it is
 
 2. Generate the ChimeraX loading script for a specific tomogram using the above command
 
-```
-python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
-```
+*python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1*
 
 3. Edit the script for proper level of the map and open the output script in Chimera using commandline or interface:
 
-```
-chimerax load_tomo1.cxc
-```
+*chimerax load_tomo1.cxc*
 
 4. Loading the tomogram into ChimeraX (Better bin4 or more for faster loading)
 
