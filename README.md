@@ -47,15 +47,15 @@ NOTE: The Chimera version of the script also works to a certain degree but it is
 *volume #TomoModelNumber voxelSize 10.48 originIndex 0,0,0*
 
 
-**View of the subtomogram average only
+**View of the subtomogram average only**
 
 ![AvgOnly](https://github.com/builab/subtomo2Chimera/blob/main/image4.png?raw=true)
 
-**View of subtomogram average within the tomogram
+**View of subtomogram average within the tomogram**
 
 ![VolumeDisplay](https://github.com/builab/subtomo2Chimera/blob/main/image2.png?raw=true)
 
-**Plane View
+**Plane View**
 
 ![PlaneDisplay](https://github.com/builab/subtomo2Chimera/blob/main/image3.png?raw=true)
 
