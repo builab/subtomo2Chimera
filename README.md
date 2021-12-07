@@ -44,17 +44,19 @@ NOTE: The Chimera version of the script also works to a certain degree but it is
 
 5. Set the right pixel size and origin for the tomogram to be properly located relative to the subtomogram average
 
-```
-volume #TomoModelNumber voxelSize 10.48 originIndex 0,0,0
-```
+*volume #TomoModelNumber voxelSize 10.48 originIndex 0,0,0*
+
 
 View of the subtomogram average only
+
 ![AvgOnly](https://github.com/builab/subtomo2Chimera/blob/main/image4.png?raw=true)
 
 View of subtomogram average within the tomogram
+
 ![VolumeDisplay](https://github.com/builab/subtomo2Chimera/blob/main/image2.png?raw=true)
 
 Plane View
+
 ![PlaneDisplay](https://github.com/builab/subtomo2Chimera/blob/main/image3.png?raw=true)
 
 
