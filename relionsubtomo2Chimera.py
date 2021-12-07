@@ -3,12 +3,13 @@
 """
 Created on Sat Dec  4 22:56:14 2021
 
+WARNING: It works for the subtomogram but not aligned properly to the tomogram
+
 Script to convert star file to visualization script in Chimera/ChimeraX
 Need to install eulerangles, starfile (pip install eulerangles, pip install starfile)
 Need to adjust level after in the chimera script
-Note work very well yet in aligning with tomogram
 Usage: relionsubtomo2Chimera.py --i run_data.star --o load_chimera.cmd --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
-@author: kbui2
+@author: Huy Bui, McGill
 """
 
 
@@ -16,8 +17,6 @@ import pandas as pd
 import numpy as np
 import starfile
 import argparse, os
-
-from eulerangles import euler2euler
 
 
 if __name__=='__main__':

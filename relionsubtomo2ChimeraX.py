@@ -6,8 +6,8 @@ Created on Sat Dec  4 22:56:14 2021
 Script to convert star file to visualization script in Chimera/ChimeraX
 Need to install eulerangles, starfile (pip install eulerangles, pip install starfile)
 Need to adjust level after in the chimera script
-Usage: relionsubtomo2Chimera.py --i run_data.star --o load_chimera.cmd --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
-@author: kbui2
+Usage: relionsubtomo2ChimeraX.py --i run_data.star --o load_chimera.cmd --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
+@author: Huy Bui, McGill University
 """
 
 
@@ -24,6 +24,8 @@ if __name__=='__main__':
 	parser.add_argument('--avgAngpix', help='Pixel size of average',required=True)
 	parser.add_argument('--avgBoxSize', help='Box size of average',required=True)
 	parser.add_argument('--tomoname', help='Tomo Name',required=True)
+	parser.add_argument('--offset', help='Offset of volume number',required=False, default=0)
+
 	
 	args = parser.parse_args()
 	
@@ -44,8 +46,7 @@ if __name__=='__main__':
 	nosubtomo = len(dftomo)
 	
 	# Offset to load in case many different object. Not use now
-	offset = 0
-	
+	offset = int(args.offset)	
 	out = open(outfile, 'w')
 	
 	# (N-1)/2 later
@@ -56,7 +57,6 @@ if __name__=='__main__':
 	
 	out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, len(dftomo)-1, level))
 		
-	#out.write('cofr 0,0,0')
 		
 	for i in range(len(dftomo)):
 		eulers_relion = dftomo.loc[i, ['rlnAngleRot', 'rlnAngleTilt', 'rlnAnglePsi']].tolist()
@@ -71,6 +71,8 @@ if __name__=='__main__':
 		adjOriginAngst = originAngst + t1
 		out.write('view matrix mod #{:d},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f}\n'.format(i + offset + 1, rotm[0,0], rotm[0,1], rotm[0,2], adjOriginAngst[0], rotm[1,0], rotm[1,1], rotm[1,2], adjOriginAngst[1], rotm[2,0], rotm[2,1], rotm[2,2], adjOriginAngst[2]))
 		
+	out.write('\nview orient\n')
+	
 	out.close()
 
 	
