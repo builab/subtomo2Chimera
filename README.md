@@ -27,12 +27,16 @@ The subtomogram average name is avg.mrc by default. You need to adjust the level
 
 The output Chimera loading script uses a lot of memory due to many subtomograms rendering. Therefore, try to make the avg.mrc file as small as possible. It doesn't have to be the same pixel size as the star file data. You can use further binning/tight crop and then input the pixel size & box size of the subtomogram average into the command
 
-NOTE 1:
+**NOTE 1:**
+
 For calculation of rotation matrix:
 The rotation matrix needs to be transposed due to the view orientation of Chimera (turn x 180).
+
 The shift after the rotation = RotationMatrix*-HalfBoxSize + CoordinateOfSubtomogram
 
-NOTE 2: The Chimera version of the script also works to a certain degree but it is very clumpsy and not properly aligned to the tomogram.
+
+**NOTE 2:**
+The Chimera version of the script also works to a certain degree but it is very clumpsy and not properly aligned to the tomogram.
 
 ## How to run:
 1. Prepare the input files: Relion star file from Refine3D job (Should be at least 3.1 and up), the binned out subtomogram average avg.mrc (size ~1Mb)
