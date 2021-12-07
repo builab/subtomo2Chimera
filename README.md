@@ -24,12 +24,15 @@ The output Chimera loading script uses a lot of memory due to many subtomograms.
 
 NOTE: The Chimera version also works but very clumpsy and not properly aligned to the tomogram
 
-![alt text](https://github.com/builab/subtomo2Chimera/blob/master/image2.jpg?raw=true)
+Image 3
+![AvgOnly](https://github.com/builab/subtomo2Chimera/blob/main/image3.jpg?raw=true)
+
+Image
+![VolumeDisplay](https://github.com/builab/subtomo2Chimera/blob/main/image2.png?raw=true)
 
 Image 2
-![alt text](https://github.com/builab/subtomo2Chimera/blob/master/image3.jpg?raw=true)
+![PlaneDisplay](https://github.com/builab/subtomo2Chimera/blob/main/image3.jpg?raw=true)
 
-Image 3
-![alt text](https://github.com/builab/subtomo2Chimera/blob/master/image3.jpg?raw=true)
+
 
 
