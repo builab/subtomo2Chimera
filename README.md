@@ -1,7 +1,12 @@
 # subtomo2Chimera
 
 ## Required:
-starfile and eulerangles module from Alister Burt
+[starfile](https://pypi.org/project/starfile/) and [eulerangles](https://pypi.org/project/eulerangles/) modules from Alister Burt
+
+```
+pip install eulerangles
+pip install starfile
+```
 
 ## Usage:
 ```
@@ -45,7 +50,7 @@ The Chimera version of the script also works to a certain degree but it is very 
 
 *python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1*
 
-3. Edit the script for proper level of the map and open the output script in Chimera using commandline or interface:
+3. Edit the ChimeraX loading script for proper level of the map and open the output script in Chimera using commandline or interface:
 
 *chimerax load_tomo1.cxc*
 
