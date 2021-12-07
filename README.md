@@ -1,8 +1,9 @@
 # subtomo2Chimera
 
-##Required:## starfile and eulerangles module from Alister Burt
+##Required:
+starfile and eulerangles module from Alister Burt
 
-##Usage:##
+##Usage:
 ```
 relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_chimera.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
 ```
