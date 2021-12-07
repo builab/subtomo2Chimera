@@ -30,25 +30,27 @@ The output Chimera loading script uses a lot of memory due to many subtomograms 
 NOTE: The Chimera version of the script also works to a certain degree but it is very clumpsy and not properly aligned to the tomogram.
 
 ## How to run:
-1. Prepare the input files: Relion star file from Refine3D job (Should be at least 3.1 and up), the binned out subtomogram average (size ~1Mb)
+1. Prepare the input files: Relion star file from Refine3D job (Should be at least 3.1 and up), the binned out subtomogram average avg.mrc (size ~1Mb)
 
-1. Generate the ChimeraX loading script for a specific tomogram using the above command
+2. Generate the ChimeraX loading script for a specific tomogram using the above command
 
 ```
 python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
 ```
 
-2. Edit the script for proper level of the map and open the output script in Chimera using commandline or interface:
+3. Edit the script for proper level of the map and open the output script in Chimera using commandline or interface:
 
 ```
 chimerax load_tomo1.cxc
 ```
 
-3. Loading the tomogram into ChimeraX (Better bin4 or more for faster loading)
+4. Loading the tomogram into ChimeraX (Better bin4 or more for faster loading)
 
-4. Set the right pixel size and origin for the tomogram to be properly located relative to the subtomogram average
+5. Set the right pixel size and origin for the tomogram to be properly located relative to the subtomogram average
 
+```
 volume #TomoModelNumber voxelSize 10.48 originIndex 0,0,0
+```
 
 View of the subtomogram average only
 ![AvgOnly](https://github.com/builab/subtomo2Chimera/blob/main/image4.png?raw=true)
