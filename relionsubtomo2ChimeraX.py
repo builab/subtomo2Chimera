@@ -57,15 +57,15 @@ if __name__=='__main__':
 	
 	out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, len(dftomo)-1, level))
 		
-		
+	index_offset = dftomo.index[0]	
 	for i in range(len(dftomo)):
-		eulers_relion = dftomo.loc[i, ['rlnAngleRot', 'rlnAngleTilt', 'rlnAnglePsi']].tolist()
+		eulers_relion = dftomo.loc[index_offset+i, ['rlnAngleRot', 'rlnAngleTilt', 'rlnAnglePsi']].tolist()
 		rotm = euler2matrix(eulers_relion, axes='zyz', intrinsic=True, right_handed_rotation=True)
 
 		# Tranpose the matrix due to z view in Chimera
 		rotm = rotm.transpose()
-		origin = dftomo.loc[i, ['rlnCoordinateX', 'rlnCoordinateY', 'rlnCoordinateZ']].to_numpy()
-		shiftAngst = dftomo.loc[i, ['rlnOriginXAngst', 'rlnOriginYAngst', 'rlnOriginZAngst']].to_numpy()
+		origin = dftomo.loc[index_offset+i, ['rlnCoordinateX', 'rlnCoordinateY', 'rlnCoordinateZ']].to_numpy()
+		shiftAngst = dftomo.loc[index_offset+i, ['rlnOriginXAngst', 'rlnOriginYAngst', 'rlnOriginZAngst']].to_numpy()
 		originAngst = origin*angpix - shiftAngst
 		t1 = np.matmul(rotm, -radiusAngst.transpose())
 		adjOriginAngst = originAngst + t1
