@@ -54,7 +54,7 @@ if __name__=='__main__':
 	radiusAngst = (np.array(boxSize)-1)/2*avgAngpix
 	
 	for i in range(len(dftomo)):
-		out.write('open {:s}\n'.format(args.avgFilename)
+		out.write('open {:s}\n'.format(args.avgFilename))
 	
 	out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, offset + len(dftomo), level))
 		
