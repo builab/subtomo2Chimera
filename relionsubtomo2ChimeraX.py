@@ -25,6 +25,7 @@ if __name__=='__main__':
 	parser.add_argument('--avgBoxSize', help='Box size of average',required=True)
 	parser.add_argument('--tomoname', help='Tomo Name',required=True)
 	parser.add_argument('--avgFilename', help='Avg subtomo filename',required=False, default='avg.mrc')
+	parser.add_argument('--level', help='Level of subtomo avg',required=False, default=0.0039)
 	parser.add_argument('--offset', help='Offset of volume number',required=False, default=0)
 
 	
@@ -33,7 +34,7 @@ if __name__=='__main__':
 	outfile = args.o
 	TomoName = args.tomoname
 	
-	level= 0.0039
+	level= float(args.level)
 	avgAngpix = float(args.avgAngpix)
 	boxSize = [float(x) for x in args.avgBoxSize.split(",")]
 
