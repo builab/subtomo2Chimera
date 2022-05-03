@@ -23,7 +23,7 @@ python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cx
 
 *--tomoname* Name of tomo for the visualization. You have to do this script for each tomo you want to visualize.
 
-*--avgFileName* Name of subtomo average loaded for the visualization. Default is avg.mrc but you can put any name in.
+*--avgFileName* Name of subtomo average loaded for the visualization. Default is *avg.mrc* but you can put any name in.
 
 *--offset* (default 0) Offset number if you want to load different kinds of subtomogram averages into the same session
 
