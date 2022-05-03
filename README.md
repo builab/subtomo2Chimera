@@ -41,6 +41,7 @@ The shift after the rotation = RotationMatrix*-HalfBoxSize + CoordinateOfSubtomo
 
 
 **NOTE 2:**
+Script only works with relion 4.0 star file.
 The Chimera version of the script also works to a certain degree but it is very clumpsy and not properly aligned to the tomogram.
 
 ## How to run:
