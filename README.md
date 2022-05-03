@@ -23,9 +23,14 @@ python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cx
 
 *--tomoname* Name of tomo for the visualization. You have to do this script for each tomo you want to visualize.
 
+Not required option
+
 *--avgFileName* Name of subtomo average loaded for the visualization. Default is *avg.mrc* but you can put any name in.
 
 *--offset* (default 0) Offset number if you want to load different kinds of subtomogram averages into the same session
+
+*--level* (default 0.0039) Volume level set for the subtomogram average
+
 
 ## How it works:
 The script will load the subtomogram average in Chimera and transform it to orientation of each subtomo in the tomogram. You can also load the tomogram in to visualize it together. This script only perform for only one kind of subtomogram average but it is not too difficult to do the same thing with different classes of average using the offset and combine the loading script together.
@@ -53,7 +58,11 @@ The Chimera version of the script also works to a certain degree but it is very 
 
 2. Generate the ChimeraX loading script for a specific tomogram using the above command
 
-*python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1*
+*python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1* 
+
+Full command
+
+*python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1 --level 0.0039 --avgFileName avg.mrc --offset 0* 
 
 3. Edit the ChimeraX loading script for proper level of the map and open the output script in Chimera using commandline or interface:
 
