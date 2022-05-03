@@ -23,6 +23,8 @@ python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cx
 
 *--tomoname* Name of tomo for the visualization. You have to do this script for each tomo you want to visualize.
 
+*--avgFileName* Name of subtomo average loaded for the visualization. Default is avg.mrc but you can put any name in.
+
 *--offset* (default 0) Offset number if you want to load different kinds of subtomogram averages into the same session
 
 ## How it works:
@@ -31,6 +33,8 @@ The script will load the subtomogram average in Chimera and transform it to orie
 The subtomogram average name is avg.mrc by default. You need to adjust the level of the average in output Chimera loading script. You can use the exact command above to test the example of ribosome subtomo average from EMPIAR-10064.
 
 The output Chimera loading script uses a lot of memory due to many subtomograms rendering. Therefore, try to make the avg.mrc file as small as possible. It doesn't have to be the same pixel size as the star file data. You can use further binning/tight crop and then input the pixel size & box size of the subtomogram average into the command
+
+Update: 2022/05/03 Now you can customize the subtomo avg name & the offset is now correct.
 
 **NOTE 1:**
 
