@@ -24,6 +24,7 @@ if __name__=='__main__':
 	parser.add_argument('--avgAngpix', help='Pixel size of average',required=True)
 	parser.add_argument('--avgBoxSize', help='Box size of average',required=True)
 	parser.add_argument('--tomoname', help='Tomo Name',required=True)
+	parser.add_argument('--avgFilename', help='Avg subtomo filename',required=False, default='avg.mrc')
 	parser.add_argument('--offset', help='Offset of volume number',required=False, default=0)
 
 	
@@ -53,9 +54,9 @@ if __name__=='__main__':
 	radiusAngst = (np.array(boxSize)-1)/2*avgAngpix
 	
 	for i in range(len(dftomo)):
-		out.write('open avg.mrc\n')
+		out.write('open {:s}\n'.format(args.avgFilename)
 	
-	out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, len(dftomo)-1, level))
+	out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, offset + len(dftomo), level))
 		
 	index_offset = dftomo.index[0]	
 	for i in range(len(dftomo)):
