@@ -2,12 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Dec  4 22:56:14 2021
-
-Script to convert Relion 4.0 star file to visualization script in Chimera/ChimeraX
-Need to install eulerangles, starfile (pip install eulerangles, pip install starfile)
-Need to adjust level after in the chimera script
-2022/05/05 Add stl compatible script
-Usage: relionsubtomo2ChimeraX.py --i run_data.star --o load_chimera.cmd --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
+Modification of relionsubtomo2ChimeraX.py for Dynamo table
+Usage: relionsubtomo2ChimeraX.py --i run_data.star --o load_chimeraX.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
 @author: Huy Bui, McGill University
 """
 
@@ -19,13 +15,13 @@ import argparse
 from eulerangles import euler2matrix
 
 if __name__=='__main__':
-	parser = argparse.ArgumentParser(description='Convert Relion 4.0 subtomo star to ChimeraX session')
-	parser.add_argument('--i', help='Input star file',required=True)
+	parser = argparse.ArgumentParser(description='Convert Dynamo table to ChimeraX session')
+	parser.add_argument('--i', help='Input table file',required=True)
 	parser.add_argument('--o', help='Output Chimera Script',required=True)
 	parser.add_argument('--avgAngpix', help='Pixel size of average',required=True)
 	parser.add_argument('--avgBoxSize', help='Box size of average',required=True)
 	parser.add_argument('--tomoname', help='Tomo Name',required=True)
-	parser.add_argument('--avgFilename', help='Avg subtomo filename',required=False, default='avg.mrc')
+	parser.add_argument('--avgFilename', help='Avg subtomo filename (mrc or stl format)',required=False, default='avg.mrc')
 	parser.add_argument('--level', help='Level of subtomo avg',required=False, default=0.0039)
 	parser.add_argument('--offset', help='Offset of volume number',required=False, default=0)
 
@@ -39,14 +35,11 @@ if __name__=='__main__':
 	avgAngpix = float(args.avgAngpix)
 	boxSize = [float(x) for x in args.avgBoxSize.split(",")]
 
-	# Loading Relion 4.0 star file
+	# Loading table
 	stardict = starfile.read(args.i)
 	
 	df_optics = stardict['optics']	
-	# Relion 4.0
 	angpix = df_optics.loc[0, 'rlnTomoTiltSeriesPixelSize']	
-	# If it is Relion 3.1
-	#angpix = df_optics.loc[0, 'rlnImagePixelSize']
 	
 	df = stardict['particles']
 	dftomo = df[df.rlnTomoName == TomoName].copy()
