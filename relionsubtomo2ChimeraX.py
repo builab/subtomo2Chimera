@@ -6,6 +6,7 @@ Created on Sat Dec  4 22:56:14 2021
 Script to convert star file to visualization script in Chimera/ChimeraX
 Need to install eulerangles, starfile (pip install eulerangles, pip install starfile)
 Need to adjust level after in the chimera script
+2022/05/05 Add stl compatible script
 Usage: relionsubtomo2ChimeraX.py --i run_data.star --o load_chimera.cmd --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
 @author: Huy Bui, McGill University
 """
@@ -57,7 +58,8 @@ if __name__=='__main__':
 	for i in range(len(dftomo)):
 		out.write('open {:s}\n'.format(args.avgFilename))
 	
-	out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, offset + len(dftomo), level))
+	if avgs.avgFilename.endswith('.mrc'):
+		out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, offset + len(dftomo), level))
 		
 	index_offset = dftomo.index[0]	
 	for i in range(len(dftomo)):
