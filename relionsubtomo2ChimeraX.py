@@ -58,7 +58,7 @@ if __name__=='__main__':
 	for i in range(len(dftomo)):
 		out.write('open {:s}\n'.format(args.avgFilename))
 	
-	if avgs.avgFilename.endswith('.mrc'):
+	if args.avgFilename.endswith('.mrc'):
 		out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, offset + len(dftomo), level))
 		
 	index_offset = dftomo.index[0]	
