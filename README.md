@@ -74,6 +74,18 @@ Full command
 
 *volume #TomoModelNumber voxelSize 10.48 originIndex 0,0,0*
 
+## How to run alternatively:
+
+1. One you have the load_tomo1.cxc from above, you can actually use stl file for faster loading time or flexible coloring as well.
+First, you need to convert the surface render of avg.mrc to a STL file.
+Load avg.mrc in ChimeraX, set a proper threshold like you want to see it. Then save the surface rendering as STL file
+
+*save avg.stl format stl models #1*
+
+2. Regenerate the loading cxc script
+
+*python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1_stl.cxc --avgAngpix 10.48 --avgFileName avg.stl --avgBoxSize "64,64,64" --tomoname CTEM_tomo1* 
+
 
 **View of the subtomogram average only**
 
