@@ -11,6 +11,7 @@ Usage: relionsubtomo2ChimeraX.py --i run_data.star --o load_chimeraX.cxc --avgAn
 import numpy as np
 import starfile
 import argparse
+import dynamotable
 
 from eulerangles import euler2matrix
 
@@ -18,14 +19,15 @@ if __name__=='__main__':
 	parser = argparse.ArgumentParser(description='Convert Dynamo table to ChimeraX session')
 	parser.add_argument('--i', help='Input table file',required=True)
 	parser.add_argument('--o', help='Output Chimera Script',required=True)
-	parser.add_argument('--avgAngpix', help='Pixel size of average',required=True)
+	parser.add_argument('--avgAngpix', help='Pixel size of average used for display',required=True)
+	parser.add_argument('--tomoAngpix', help='Pixel size of tomo in table',required=True)
 	parser.add_argument('--avgBoxSize', help='Box size of average',required=True)
 	parser.add_argument('--tomoname', help='Tomo Name',required=True)
 	parser.add_argument('--avgFilename', help='Avg subtomo filename (mrc or stl format)',required=False, default='avg.mrc')
 	parser.add_argument('--level', help='Level of subtomo avg',required=False, default=0.0039)
 	parser.add_argument('--offset', help='Offset of volume number',required=False, default=0)
 
-	
+
 	args = parser.parse_args()
 	
 	outfile = args.o
@@ -34,15 +36,12 @@ if __name__=='__main__':
 	level= float(args.level)
 	avgAngpix = float(args.avgAngpix)
 	boxSize = [float(x) for x in args.avgBoxSize.split(",")]
+	angpix = float(args.tomoAngpix)
 
 	# Loading table
-	stardict = starfile.read(args.i)
-	
-	df_optics = stardict['optics']	
-	angpix = df_optics.loc[0, 'rlnTomoTiltSeriesPixelSize']	
-	
-	df = stardict['particles']
-	dftomo = df[df.rlnTomoName == TomoName].copy()
+	df = dynamotable.read(args.i, args.tdoc)
+	print(df)
+	dftomo = df[df.tomo_file == TomoName].copy()
 	nosubtomo = len(dftomo)
 	
 	# Offset to load in case many different object. Not use now
@@ -60,14 +59,14 @@ if __name__=='__main__':
 		
 	index_offset = dftomo.index[0]	
 	for i in range(len(dftomo)):
-		eulers_relion = dftomo.loc[index_offset+i, ['rlnAngleRot', 'rlnAngleTilt', 'rlnAnglePsi']].tolist()
-		rotm = euler2matrix(eulers_relion, axes='zyz', intrinsic=True, right_handed_rotation=True)
+		eulers_dynamo = dftomo.loc[index_offset+i, ['tdrot', 'tdtilt', 'narot']].tolist()
+		rotm = euler2matrix(eulers_dynamo, axes='zxz', intrinsic=True, right_handed_rotation=True)
 
 		# Tranpose the matrix due to z view in Chimera
 		rotm = rotm.transpose()
-		origin = dftomo.loc[index_offset+i, ['rlnCoordinateX', 'rlnCoordinateY', 'rlnCoordinateZ']].to_numpy()
-		shiftAngst = dftomo.loc[index_offset+i, ['rlnOriginXAngst', 'rlnOriginYAngst', 'rlnOriginZAngst']].to_numpy()
-		originAngst = origin*angpix - shiftAngst
+		origin = dftomo.loc[index_offset+i, ['x', 'y, 'z']].to_numpy()
+		shiftAngst = dftomo.loc[index_offset+i, ['dx', 'dy', 'dz']].to_numpy()*angpix
+		originAngst = origin*angpix + shiftAngst
 		t1 = np.matmul(rotm, -radiusAngst.transpose())
 		adjOriginAngst = originAngst + t1
 		out.write('view matrix mod #{:d},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f}\n'.format(i + offset + 1, rotm[0,0], rotm[0,1], rotm[0,2], adjOriginAngst[0], rotm[1,0], rotm[1,1], rotm[1,2], adjOriginAngst[1], rotm[2,0], rotm[2,1], rotm[2,2], adjOriginAngst[2]))
