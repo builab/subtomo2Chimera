@@ -49,7 +49,11 @@ if __name__=='__main__':
 	#angpix = df_optics.loc[0, 'rlnImagePixelSize']
 	
 	df = stardict['particles']
+	# Relion 4.0
 	dftomo = df[df.rlnTomoName == TomoName].copy()
+	# Relion 3.1
+	#dftomo = df[df.rlnMicrographName == TomoName].copy()
+
 	nosubtomo = len(dftomo)
 	
 	# Offset to load in case many different object. Not use now
