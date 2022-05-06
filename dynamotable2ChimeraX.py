@@ -59,9 +59,8 @@ if __name__=='__main__':
 		out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, offset + len(dftomo), level))
 		
 	index_offset = dftomo.index[0]	
-	print(index_offset)
 	for i in range(len(dftomo)):
-		eulers_dynamo = dftomo.loc[index_offset+i, ['tdrot', 'tdtilt', 'narot']].tolist()
+		eulers_dynamo = dftomo.loc[index_offset+i, ['tdrot', 'tilt', 'narot']].tolist()
 		rotm = euler2matrix(eulers_dynamo, axes='zxz', intrinsic=True, right_handed_rotation=True)
 
 		# Tranpose the matrix due to z view in Chimera
