@@ -65,7 +65,7 @@ if __name__=='__main__':
 
 		# Tranpose the matrix due to z view in Chimera
 		rotm = rotm.transpose()
-		origin = dftomo.loc[index_offset+i, ['x', 'y, 'z']].to_numpy()
+		origin = dftomo.loc[index_offset+i, ['x', 'y', 'z']].to_numpy()
 		shiftAngst = dftomo.loc[index_offset+i, ['dx', 'dy', 'dz']].to_numpy()*angpix
 		originAngst = origin*angpix + shiftAngst
 		t1 = np.matmul(rotm, -radiusAngst.transpose())
