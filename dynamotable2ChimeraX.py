@@ -18,6 +18,7 @@ from eulerangles import euler2matrix
 if __name__=='__main__':
 	parser = argparse.ArgumentParser(description='Convert Dynamo table to ChimeraX session')
 	parser.add_argument('--i', help='Input table file',required=True)
+	parser.add_argument('--tomoDoc', help='Input tomo doc file',required=True)
 	parser.add_argument('--o', help='Output Chimera Script',required=True)
 	parser.add_argument('--avgAngpix', help='Pixel size of average used for display',required=True)
 	parser.add_argument('--tomoAngpix', help='Pixel size of tomo in table',required=True)
@@ -39,7 +40,7 @@ if __name__=='__main__':
 	angpix = float(args.tomoAngpix)
 
 	# Loading table
-	df = dynamotable.read(args.i, args.tdoc)
+	df = dynamotable.read(args.i, args.tomoDoc)
 	print(df)
 	dftomo = df[df.tomo_file == TomoName].copy()
 	nosubtomo = len(dftomo)
