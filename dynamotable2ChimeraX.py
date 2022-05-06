@@ -61,9 +61,9 @@ if __name__=='__main__':
 	index_offset = dftomo.index[0]	
 	for i in range(len(dftomo)):
 		eulers_dynamo = dftomo.loc[index_offset+i, ['tdrot', 'tilt', 'narot']].tolist()
-		rotm = euler2matrix(eulers_dynamo, axes='zxz', intrinsic=True, right_handed_rotation=True)
+		rotm = euler2matrix(eulers_dynamo, axes='zxz', intrinsic=False, right_handed_rotation=True, active=False)
 
-		# Tranpose the matrix due to z view in Chimera
+		# Transpose the matrix due to z view in Chimera
 		rotm = rotm.transpose()
 		origin = dftomo.loc[index_offset+i, ['x', 'y', 'z']].to_numpy()
 		shiftAngst = dftomo.loc[index_offset+i, ['dx', 'dy', 'dz']].to_numpy()*angpix
