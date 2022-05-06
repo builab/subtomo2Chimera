@@ -1,14 +1,19 @@
 # subtomo2Chimera
 
+Convert Dynamo table, relion 4.0 star file to script to visualize in ChimeraX
+
 ## Required:
 [starfile](https://pypi.org/project/starfile/) and [eulerangles](https://pypi.org/project/eulerangles/) modules from Alister Burt
+
+If you use dynamotable2ChimeraX.py, you need to also install [dynamotable](https://pypi.org/project/dynamotable/)
 
 ```
 pip install eulerangles
 pip install starfile
+pip install dynamotable
 ```
 
-## Usage:
+## relionsubtomo2ChimeraX.py Usage:
 ```
 python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
 ```
@@ -21,7 +26,7 @@ python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cx
 
 *--avgBoxSize* Box Size of the average. 3 values seperated by comma and double quoted. Better be a cube. Not tested with non-cube yet.
 
-*--tomoname* Name of tomo for the visualization. You have to do this script for each tomo you want to visualize.
+*--tomoname* Name of tomo for the visualization. You have to do this script for each tomo you want to visualize. And the tomo name needs 100% match.
 
 Not required option
 
@@ -30,6 +35,36 @@ Not required option
 *--offset* (default 0) Offset number if you want to load different kinds of subtomogram averages into the same session
 
 *--level* (default 0.0039) Volume level set for the subtomogram average
+
+
+## dynamotable2ChimeraX.py Usage:
+```
+python subtomo2Chimera/dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load_tomo.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" --tomoname CU428_TS013_rec.mrc
+```
+
+*--i* Input table file
+
+*--tomoDoc* Input tomo doc file
+
+*--o* Output ChimeraX Loading Script
+
+*--avgAngpix* Pixel Size of the average file
+
+*--avgBoxSize* Box Size of the average. 3 values seperated by comma and double quoted. Better be a cube. Not tested with non-cube yet.
+
+*--tomoname* Name of tomo for the visualization. You have to do this script for each tomo you want to visualize. Name needs 100% match
+
+*--tomoAngpix* Pixel size of the tomogram used for Dynamo table.
+
+Not required option
+
+*--avgFileName* Name of subtomo average loaded for the visualization. Default is *avg.mrc* but you can put any name in.
+
+*--offset* (default 0) Offset number if you want to load different kinds of subtomogram averages into the same session
+
+*--level* (default 0.0039) Volume level set for the subtomogram average
+
+
 
 
 ## How it works:
@@ -54,7 +89,7 @@ Script only works with relion 4.0 star file.
 The Chimera version of the script also works to a certain degree but it is very clumpsy and not properly aligned to the tomogram.
 
 ## How to run:
-1. Prepare the input files: Relion star file from Refine3D job (Should be at least 3.1 and up), the binned out subtomogram average avg.mrc (size ~1Mb)
+1. Prepare the input files: Relion star file from Refine3D job (Should be at least 3.1 and up), the binned out subtomogram average avg.mrc (size ~1Mb). For Dynamo, table & tomogram doc file, the binned out subtomogram average avg.mrc.
 
 2. Generate the ChimeraX loading script for a specific tomogram using the above command
 
@@ -63,6 +98,10 @@ The Chimera version of the script also works to a certain degree but it is very 
 Full command
 
 *python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1 --level 0.0039 --avgFileName avg.mrc --offset 0* 
+
+For dynamo command
+
+*python dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load_tomo.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" --tomoname CU428_TS013_rec.mrc
 
 3. Edit the ChimeraX loading script for proper level of the map and open the output script in Chimera using commandline or interface:
 
