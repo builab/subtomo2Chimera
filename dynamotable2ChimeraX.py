@@ -3,10 +3,9 @@
 """
 Created on Sat Dec  4 22:56:14 2021
 Modification of relionsubtomo2ChimeraX.py for Dynamo table
-Usage: relionsubtomo2ChimeraX.py --i run_data.star --o load_chimeraX.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
+Usage: python subtomo2Chimera/dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i CU428_TS013_1/aligned.tbl --o test_013_old.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" --tomoname CU428_TS013_rec.mrc
 @author: Huy Bui, McGill University
 """
-
 
 import numpy as np
 import starfile
