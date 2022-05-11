@@ -24,7 +24,7 @@ python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cx
 
 *--avgAngpix* Pixel Size of the average file
 
-*--avgBoxSize* Box Size of the average. 3 values seperated by comma and double quoted. Better be a cube. Not tested with non-cube yet.
+*--avgBoxSize* Box Size of the average. 3 values seperated by comma and double quoted. It is ok to use non-cube as long as same center as the cubic subtomogram.
 
 *--tomoname* Name of tomo for the visualization. You have to do this script for each tomo you want to visualize. And the tomo name needs 100% match.
 
@@ -50,7 +50,7 @@ python subtomo2Chimera/dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i align
 
 *--avgAngpix* Pixel Size of the average file
 
-*--avgBoxSize* Box Size of the average. 3 values seperated by comma and double quoted. Better be a cube. Not tested with non-cube yet.
+*--avgBoxSize* Box Size of the average. 3 values seperated by comma and double quoted. It is ok to use non-cube as long as same center as the cubic subtomogram.
 
 *--tomoname* Name of tomo for the visualization. You have to do this script for each tomo you want to visualize. Name needs 100% match
 
