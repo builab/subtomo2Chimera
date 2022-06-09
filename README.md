@@ -1,6 +1,6 @@
-# subtomo2Chimera v0.1
+# subtomo2Chimera v0.11
 
-Convert Dynamo table, relion 4.0 star file to script to visualize in ChimeraX
+Convert Dynamo table, relion 4.0 (3.1) star file to script to visualize in ChimeraX
 
 ## Required:
 [starfile](https://pypi.org/project/starfile/) and [eulerangles](https://pypi.org/project/eulerangles/) modules from Alister Burt
@@ -16,6 +16,11 @@ pip install dynamotable
 ## relionsubtomo2ChimeraX.py Usage:
 ```
 python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
+```
+
+```
+For Relion 3.1
+python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1 --relion31 1
 ```
 
 *--i* Input star file
@@ -35,6 +40,8 @@ Not required option
 *--offset* (default 0) Offset number if you want to load different kinds of subtomogram averages into the same session
 
 *--level* (default 0.0039) Volume level set for the subtomogram average
+
+*--relion31* (default 0) Relion 3.1 or Relion 4.0 (1 or 0 value).
 
 
 ## dynamotable2ChimeraX.py Usage:
@@ -74,7 +81,9 @@ The subtomogram average name is avg.mrc by default. You need to adjust the level
 
 The output ChimeraX loading script uses a lot of memory due to many subtomograms rendering. Therefore, try to make the avg.mrc file as small as possible. It doesn't have to be the same pixel size as the star file data. You can use further binning/tight crop and then input the pixel size & box size of the subtomogram average into the command
 
-Update: 2022/05/03 Now you can customize the subtomo avg name & the offset is now correct.
+Update: v0.1 2022/05/03 Now you can customize the subtomo avg name & the offset is now correct.
+Update: v0.11 2022/06/08 Fix the index for non-sorted star file. Also can use --relion31 flag for doing Relion3.1 file directly.
+
 
 **NOTE 1:**
 
