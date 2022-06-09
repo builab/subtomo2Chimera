@@ -1,4 +1,4 @@
-# subtomo2Chimera v0.11
+# subtomo2Chimera v0.11 2022/06/08
 
 Convert Dynamo table, relion 4.0 (3.1) star file to script to visualize in ChimeraX
 
