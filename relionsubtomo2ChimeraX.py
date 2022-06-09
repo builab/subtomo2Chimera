@@ -45,17 +45,15 @@ if __name__=='__main__':
 	stardict = starfile.read(args.i)
 	
 	df_optics = stardict['optics']	
-	# Relion 4.0
-	angpix = df_optics.loc[0, 'rlnTomoTiltSeriesPixelSize']	
-	# If it is Relion 3.1
-	#angpix = df_optics.loc[0, 'rlnImagePixelSize']
 	
 	df = stardict['particles']
-	# Relion 4.0
+	# Relion 4.0 or 3.1
 	if args.relion31 == 0:
+		angpix = df_optics.loc[0, 'rlnTomoTiltSeriesPixelSize']	
 		dftomo = df[df.rlnTomoName == TomoName].copy()
 	else:
 		dftomo = df[df.rlnMicrographName == TomoName].copy()
+		angpix = df_optics.loc[0, 'rlnImagePixelSize']
 	
 	# added by v0.1
 	dftomo.reset_index(drop=True, inplace=True)
