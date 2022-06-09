@@ -52,8 +52,8 @@ if __name__=='__main__':
 		angpix = df_optics.loc[0, 'rlnTomoTiltSeriesPixelSize']	
 		dftomo = df[df.rlnTomoName == TomoName].copy()
 	else:
-		dftomo = df[df.rlnMicrographName == TomoName].copy()
 		angpix = df_optics.loc[0, 'rlnImagePixelSize']
+		dftomo = df[df.rlnMicrographName == TomoName].copy()
 	
 	# added by v0.1
 	dftomo.reset_index(drop=True, inplace=True)
