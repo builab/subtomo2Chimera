@@ -1,6 +1,7 @@
-# subtomo2Chimera v0.11 2022/06/08
+# subtomo2Chimera v0.2 2022/06/23
 
 Convert Dynamo table, relion 4.0 (3.1) star file to script to visualize in ChimeraX
+Now can do in batch instead of manually doing every tomogram.
 
 ## Required:
 [starfile](https://pypi.org/project/starfile/) and [eulerangles](https://pypi.org/project/eulerangles/) modules from Alister Burt
@@ -42,6 +43,19 @@ Not required option
 *--level* (default 0.0039) Volume level set for the subtomogram average
 
 *--relion31* (default 0) Relion 3.1 or Relion 4.0 (1 or 0 value).
+
+
+## batchrelionsubtomo2ChimeraX.py Usage:
+```
+python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64"
+```
+
+```
+For Relion 3.1
+python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --relion31 1
+
+```
+*Option* The same as before without giving the --tomoname
 
 
 ## dynamotable2ChimeraX.py Usage:
