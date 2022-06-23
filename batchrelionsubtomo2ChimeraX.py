@@ -68,7 +68,7 @@ if __name__=='__main__':
 		# Offset to load in case many different object. Not use now
 		offset = int(args.offset)	
 		# Different from non-batch
-		out = open(outfile + '_' + tomoName + '.cxc', 'w')
+		out = open(outfile + '_' + TomoName + '.cxc', 'w')
 	
 		# (N-1)/2 later
 		radiusAngst = (np.array(boxSize)-1)/2*avgAngpix
