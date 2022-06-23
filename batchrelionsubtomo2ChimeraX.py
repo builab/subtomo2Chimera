@@ -49,7 +49,7 @@ if __name__=='__main__':
 	else:
 		tomoList = df.rlnMicrographName.unique().tolist()
 		
-	print(tomoList)
+	#print(tomoList)
 	
 	for TomoName in tomoList:
 		# Relion 4.0 or 3.1
@@ -92,7 +92,7 @@ if __name__=='__main__':
 			t1 = np.matmul(rotm, -radiusAngst.transpose())
 			adjOriginAngst = originAngst + t1
 			out.write('view matrix mod #{:d},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f}\n'.format(i + offset + 1, rotm[0,0], rotm[0,1], rotm[0,2], adjOriginAngst[0], rotm[1,0], rotm[1,1], rotm[1,2], adjOriginAngst[1], rotm[2,0], rotm[2,1], rotm[2,2], adjOriginAngst[2]))
-		
+		print('Writing out ' + outfile + '_' + TomoName + '.cxc')
 		out.write('\nview orient\n')
 		out.close()
 
