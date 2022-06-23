@@ -29,7 +29,9 @@ if __name__=='__main__':
 	
 	args = parser.parse_args()
 	
-	outfile = args.o	
+	outfile = args.o
+	outfile = outfile.replace(".cxc", "")
+	
 	level= float(args.level)
 	avgAngpix = float(args.avgAngpix)
 	boxSize = [float(x) for x in args.avgBoxSize.split(",")]
@@ -41,48 +43,57 @@ if __name__=='__main__':
 	
 	df = stardict['particles']
 	
-	# Relion 4.0 or 3.1
+	
 	if args.relion31 == 0:
-		angpix = df_optics.loc[0, 'rlnTomoTiltSeriesPixelSize']	
-		dftomo = df[df.rlnTomoName == TomoName].copy()
+		tomoList = df.rlnTomoName.unique().tolist()
 	else:
-		angpix = df_optics.loc[0, 'rlnImagePixelSize']
-		dftomo = df[df.rlnMicrographName == TomoName].copy()
+		tomoList = df.rlnMicrographName.unique().tolist()
+		
+	print tomoList
 	
-	# added by v0.1
-	dftomo.reset_index(drop=True, inplace=True)
+	for TomoName in tomoList:
+		# Relion 4.0 or 3.1
+		if args.relion31 == 0:
+			angpix = df_optics.loc[0, 'rlnTomoTiltSeriesPixelSize']	
+			dftomo = df[df.rlnTomoName == TomoName].copy()
+		else:
+			angpix = df_optics.loc[0, 'rlnImagePixelSize']
+			dftomo = df[df.rlnMicrographName == TomoName].copy()
+	
+		# added by v0.1
+		dftomo.reset_index(drop=True, inplace=True)
 	       
-	nosubtomo = len(dftomo)
+		nosubtomo = len(dftomo)
 	
-	# Offset to load in case many different object. Not use now
-	offset = int(args.offset)	
-	out = open(outfile, 'w')
+		# Offset to load in case many different object. Not use now
+		offset = int(args.offset)	
+		# Different from non-batch
+		out = open(outfile + '_' + tomoName + '.cxc', 'w')
 	
-	# (N-1)/2 later
-	radiusAngst = (np.array(boxSize)-1)/2*avgAngpix
+		# (N-1)/2 later
+		radiusAngst = (np.array(boxSize)-1)/2*avgAngpix
 	
-	for i in range(len(dftomo)):
-		out.write('open {:s}\n'.format(args.avgFilename))
+		for i in range(len(dftomo)):
+			out.write('open {:s}\n'.format(args.avgFilename))
 	
-	if args.avgFilename.endswith('.mrc'):
-		out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, offset + len(dftomo), level))
+		if args.avgFilename.endswith('.mrc'):
+			out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, offset + len(dftomo), level))
 		
-	index_offset = dftomo.index[0]	
-	for i in range(len(dftomo)):
-		eulers_relion = dftomo.loc[index_offset+i, ['rlnAngleRot', 'rlnAngleTilt', 'rlnAnglePsi']].tolist()
-		rotm = euler2matrix(eulers_relion, axes='zyz', intrinsic=True, right_handed_rotation=True)
+		index_offset = dftomo.index[0]	
+		for i in range(len(dftomo)):
+			eulers_relion = dftomo.loc[index_offset+i, ['rlnAngleRot', 'rlnAngleTilt', 'rlnAnglePsi']].tolist()
+			rotm = euler2matrix(eulers_relion, axes='zyz', intrinsic=True, right_handed_rotation=True)
 
-		# Tranpose the matrix due to z view in Chimera
-		rotm = rotm.transpose()
-		origin = dftomo.loc[index_offset+i, ['rlnCoordinateX', 'rlnCoordinateY', 'rlnCoordinateZ']].to_numpy()
-		shiftAngst = dftomo.loc[index_offset+i, ['rlnOriginXAngst', 'rlnOriginYAngst', 'rlnOriginZAngst']].to_numpy()
-		originAngst = origin*angpix - shiftAngst
-		t1 = np.matmul(rotm, -radiusAngst.transpose())
-		adjOriginAngst = originAngst + t1
-		out.write('view matrix mod #{:d},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f}\n'.format(i + offset + 1, rotm[0,0], rotm[0,1], rotm[0,2], adjOriginAngst[0], rotm[1,0], rotm[1,1], rotm[1,2], adjOriginAngst[1], rotm[2,0], rotm[2,1], rotm[2,2], adjOriginAngst[2]))
+			# Tranpose the matrix due to z view in Chimera
+			rotm = rotm.transpose()
+			origin = dftomo.loc[index_offset+i, ['rlnCoordinateX', 'rlnCoordinateY', 'rlnCoordinateZ']].to_numpy()
+			shiftAngst = dftomo.loc[index_offset+i, ['rlnOriginXAngst', 'rlnOriginYAngst', 'rlnOriginZAngst']].to_numpy()
+			originAngst = origin*angpix - shiftAngst
+			t1 = np.matmul(rotm, -radiusAngst.transpose())
+			adjOriginAngst = originAngst + t1
+			out.write('view matrix mod #{:d},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f}\n'.format(i + offset + 1, rotm[0,0], rotm[0,1], rotm[0,2], adjOriginAngst[0], rotm[1,0], rotm[1,1], rotm[1,2], adjOriginAngst[1], rotm[2,0], rotm[2,1], rotm[2,2], adjOriginAngst[2]))
 		
-	out.write('\nview orient\n')
-	
-	out.close()
+		out.write('\nview orient\n')
+		out.close()
 
 	
