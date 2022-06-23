@@ -49,7 +49,7 @@ if __name__=='__main__':
 	else:
 		tomoList = df.rlnMicrographName.unique().tolist()
 		
-	print tomoList
+	print(tomoList)
 	
 	for TomoName in tomoList:
 		# Relion 4.0 or 3.1
