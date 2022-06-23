@@ -52,10 +52,11 @@ python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc
 
 ```
 For Relion 3.1
-python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --relion31 1
+python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --relion31 1
 
 ```
 *Option* The same as before without giving the --tomoname
+
 
 
 ## dynamotable2ChimeraX.py Usage:
