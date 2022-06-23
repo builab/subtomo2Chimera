@@ -23,7 +23,7 @@ from eulerangles import euler2matrix
 if __name__=='__main__':
 	parser = argparse.ArgumentParser(description='Convert Relion 4.0 subtomo star to ChimeraX session')
 	parser.add_argument('--i', help='Input star file',required=True)
-	parser.add_argument('--o', help='Output Chimera Script',required=True)
+	parser.add_argument('--o', help='Output ChimeraX Script',required=True)
 	parser.add_argument('--avgAngpix', help='Pixel size of average',required=True)
 	parser.add_argument('--avgBoxSize', help='Box size of average',required=True)
 	parser.add_argument('--tomoname', help='Tomo Name',required=True)

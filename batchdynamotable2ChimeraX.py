@@ -30,7 +30,7 @@ if __name__=='__main__':
 	args = parser.parse_args()
 	
 	outfile = args.o
-	TomoName = args.tomoname
+	outfile = outfile.replace(".cxc", "")
 	
 	level= float(args.level)
 	avgAngpix = float(args.avgAngpix)
@@ -40,38 +40,45 @@ if __name__=='__main__':
 	# Loading table
 	df = dynamotable.read(args.i, args.tomoDoc)
 	#print(df)
-	dftomo = df[df.tomo_file == TomoName].copy()
-	nosubtomo = len(dftomo)
 	
-	# Offset to load in case many different object. Not use now
-	offset = int(args.offset)	
-	out = open(outfile, 'w')
-	
-	# (N-1)/2 later
-	radiusAngst = (np.array(boxSize)-1)/2*avgAngpix
-	
-	for i in range(len(dftomo)):
-		out.write('open {:s}\n'.format(args.avgFilename))
-	
-	if args.avgFilename.endswith('.mrc'):
-		out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, offset + len(dftomo), level))
-		
-	index_offset = dftomo.index[0]	
-	for i in range(len(dftomo)):
-		eulers_dynamo = dftomo.loc[index_offset+i, ['tdrot', 'tilt', 'narot']].tolist()
-		rotm = euler2matrix(eulers_dynamo, axes='zxz', intrinsic=False, right_handed_rotation=True)
+	#Batch impplementation
+	tomoList = df.tomo_file.unique().tolist()
 
-		# Transpose the matrix due to z view in Chimera
-		rotm = rotm.transpose()
-		origin = dftomo.loc[index_offset+i, ['x', 'y', 'z']].to_numpy()
-		shiftAngst = dftomo.loc[index_offset+i, ['dx', 'dy', 'dz']].to_numpy()*angpix
-		originAngst = origin*angpix + shiftAngst
-		t1 = np.matmul(rotm, -radiusAngst.transpose())
-		adjOriginAngst = originAngst + t1
-		out.write('view matrix mod #{:d},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f}\n'.format(i + offset + 1, rotm[0,0], rotm[0,1], rotm[0,2], adjOriginAngst[0], rotm[1,0], rotm[1,1], rotm[1,2], adjOriginAngst[1], rotm[2,0], rotm[2,1], rotm[2,2], adjOriginAngst[2]))
-		
-	out.write('\nview orient\n')
+	for TomoName in tomoList:
+
+		dftomo = df[df.tomo_file == TomoName].copy()
+		nosubtomo = len(dftomo)
 	
-	out.close()
+		# Offset to load in case many different object. Not use now
+		offset = int(args.offset)	
+		# Different from non-batch
+		out = open(outfile + '_' + TomoName + '.cxc', 'w')
+	
+		# (N-1)/2 later
+		radiusAngst = (np.array(boxSize)-1)/2*avgAngpix
+	
+		for i in range(len(dftomo)):
+			out.write('open {:s}\n'.format(args.avgFilename))
+	
+		if args.avgFilename.endswith('.mrc'):
+			out.write('\nvolume #{:d}-{:d} step 1 level {:f}\n\n'.format(offset + 1, offset + len(dftomo), level))
+		
+		index_offset = dftomo.index[0]	
+		for i in range(len(dftomo)):
+			eulers_dynamo = dftomo.loc[index_offset+i, ['tdrot', 'tilt', 'narot']].tolist()
+			rotm = euler2matrix(eulers_dynamo, axes='zxz', intrinsic=False, right_handed_rotation=True)
+
+			# Transpose the matrix due to z view in Chimera
+			rotm = rotm.transpose()
+			origin = dftomo.loc[index_offset+i, ['x', 'y', 'z']].to_numpy()
+			shiftAngst = dftomo.loc[index_offset+i, ['dx', 'dy', 'dz']].to_numpy()*angpix
+			originAngst = origin*angpix + shiftAngst
+			t1 = np.matmul(rotm, -radiusAngst.transpose())
+			adjOriginAngst = originAngst + t1
+			out.write('view matrix mod #{:d},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f}\n'.format(i + offset + 1, rotm[0,0], rotm[0,1], rotm[0,2], adjOriginAngst[0], rotm[1,0], rotm[1,1], rotm[1,2], adjOriginAngst[1], rotm[2,0], rotm[2,1], rotm[2,2], adjOriginAngst[2]))
+
+		print('Writing out ' + outfile + '_' + TomoName + '.cxc')			
+		out.write('\nview orient\n')
+		out.close()
 
 	

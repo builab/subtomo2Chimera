@@ -18,7 +18,7 @@ if __name__=='__main__':
 	parser = argparse.ArgumentParser(description='Convert Dynamo table to ChimeraX session')
 	parser.add_argument('--i', help='Input table file',required=True)
 	parser.add_argument('--tomoDoc', help='Input tomo doc file',required=True)
-	parser.add_argument('--o', help='Output Chimera Script',required=True)
+	parser.add_argument('--o', help='Output ChimeraX Script',required=True)
 	parser.add_argument('--avgAngpix', help='Pixel size of average used for display',required=True)
 	parser.add_argument('--tomoAngpix', help='Pixel size of tomo in table',required=True)
 	parser.add_argument('--avgBoxSize', help='Box size of average',required=True)
