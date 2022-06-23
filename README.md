@@ -45,23 +45,10 @@ Not required option
 *--relion31* (default 0) Relion 3.1 or Relion 4.0 (1 or 0 value).
 
 
-## batchrelionsubtomo2ChimeraX.py Usage:
-```
-python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64"
-```
-
-```
-For Relion 3.1
-python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --relion31 1
-
-```
-*Option* The same as before without giving the --tomoname
-
-
 
 ## dynamotable2ChimeraX.py Usage:
 ```
-python subtomo2Chimera/dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load_tomo.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" --tomoname CU428_TS013_rec.mrc
+python dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load_tomo.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" --tomoname CU428_TS013_rec.mrc
 ```
 
 *--i* Input table file
@@ -86,6 +73,26 @@ Not required option
 
 *--level* (default 0.0039) Volume level set for the subtomogram average
 
+
+
+## batchrelionsubtomo2ChimeraX.py Usage:
+```
+python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64"
+```
+
+```
+For Relion 3.1
+python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --relion31 1
+
+```
+
+
+## batchdynamotable2ChimeraX.py Usage:
+```
+python batchdynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" 
+
+
+*For batch option* The same as before without giving the --tomoname
 
 
 
