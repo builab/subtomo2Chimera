@@ -5,7 +5,7 @@ v0.1
 Created on Sat June  23, 2022
 Basically a batch version of relionsubtomo2ChimeraX.py which generate loading script for every tomogram in the star files
 
-Usage: batchrelionsubtomo2ChimeraX.py --i run_data.star --o load_chimera.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
+Usage: batchrelionsubtomo2ChimeraX.py --i run_data.star --o load_chimera.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64"
 @author: Huy Bui, McGill University
 """
 
@@ -22,7 +22,6 @@ if __name__=='__main__':
 	parser.add_argument('--o', help='Output Prefix of ChimeraX Script',required=True)
 	parser.add_argument('--avgAngpix', help='Pixel size of average',required=True)
 	parser.add_argument('--avgBoxSize', help='Box size of average',required=True)
-	parser.add_argument('--tomoname', help='Tomo Name',required=True)
 	parser.add_argument('--avgFilename', help='Avg subtomo filename',required=False, default='avg.mrc')
 	parser.add_argument('--level', help='Level of subtomo avg',required=False, default=0.0039)
 	parser.add_argument('--offset', help='Offset of volume number',required=False, default=0)
@@ -30,9 +29,7 @@ if __name__=='__main__':
 	
 	args = parser.parse_args()
 	
-	outfile = args.o
-	TomoName = args.tomoname
-	
+	outfile = args.o	
 	level= float(args.level)
 	avgAngpix = float(args.avgAngpix)
 	boxSize = [float(x) for x in args.avgBoxSize.split(",")]
@@ -43,6 +40,7 @@ if __name__=='__main__':
 	df_optics = stardict['optics']	
 	
 	df = stardict['particles']
+	
 	# Relion 4.0 or 3.1
 	if args.relion31 == 0:
 		angpix = df_optics.loc[0, 'rlnTomoTiltSeriesPixelSize']	
