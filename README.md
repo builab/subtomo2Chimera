@@ -3,6 +3,10 @@
 Convert Dynamo table, relion 4.0 (3.1) star file to script to visualize in ChimeraX
 Now can do in batch instead of manually doing every tomogram.
 
+## Citation
+Please cite subtomo2Chimera code repository DOI [10.5281/zenodo.6820119](https://doi.org/10.5281/zenodo.6820119)
+
+
 ## Required:
 [starfile](https://pypi.org/project/starfile/) and [eulerangles](https://pypi.org/project/eulerangles/) modules from Alister Burt
 
