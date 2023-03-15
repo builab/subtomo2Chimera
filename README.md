@@ -128,15 +128,21 @@ Script only works with relion 4.0 star file.
 
 2. Generate the ChimeraX loading script for a specific tomogram using the above command
 
-*python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1* 
+```
+python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1* 
+```
 
 Full command
 
-*python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1 --level 0.0039 --avgFileName avg.mrc --offset 0* 
+```
+python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1 --level 0.0039 --avgFileName avg.mrc --offset 0* 
+```
 
 For dynamo command
 
-*python dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load_tomo.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" --tomoname CU428_TS013_rec.mrc
+```
+python dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load_tomo.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" --tomoname CU428_TS013_rec.mrc
+```
 
 3. Edit the ChimeraX loading script for proper level of the map and open the output script in Chimera using commandline or interface:
 
