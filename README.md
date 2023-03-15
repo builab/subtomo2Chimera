@@ -147,7 +147,7 @@ python dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load_
 3. Edit the ChimeraX loading script for proper level of the map and open the output script in Chimera using commandline or interface:
 
 ```
-*chimerax load_tomo1.cxc*
+chimerax load_tomo1.cxc
 ```
 
 4. Loading the tomogram into ChimeraX (Better bin4 or more for faster loading)
@@ -155,7 +155,7 @@ python dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load_
 5. Set the right pixel size and origin for the tomogram to be properly located relative to the subtomogram average
 
 ```
-*volume #TomoModelNumber voxelSize 10.48 originIndex 0,0,0*
+volume #TomoModelNumber voxelSize 10.48 originIndex 0,0,0
 ```
 
 ## How to run alternatively:
@@ -165,13 +165,13 @@ First, you need to convert the surface render of avg.mrc to a STL file.
 Load avg.mrc in ChimeraX, set a proper threshold like you want to see it. Then save the surface rendering as STL file
 
 ```
-*save avg.stl format stl models #1*
+save avg.stl format stl models #1
 ```
 
 2. Regenerate the loading cxc script
 
 ```
-*python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1_stl.cxc --avgAngpix 10.48 --avgFileName avg.stl --avgBoxSize "64,64,64" --tomoname CTEM_tomo1* 
+python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1_stl.cxc --avgAngpix 10.48 --avgFileName avg.stl --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
 ```
 
 
