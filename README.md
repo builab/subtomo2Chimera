@@ -84,8 +84,9 @@ Not required option
 python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64"
 ```
 
-```
+
 For Relion 3.1
+```
 python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --relion31 1
 
 ```
@@ -94,7 +95,7 @@ python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc
 ## batchdynamotable2ChimeraX.py Usage:
 ```
 python batchdynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" 
-
+```
 
 *For batch option* The same as before without giving the --tomoname
 
