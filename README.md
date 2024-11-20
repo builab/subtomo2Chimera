@@ -18,6 +18,8 @@ If you use dynamotable2ChimeraX.py, you need to also install [dynamotable](https
 pip install eulerangles==1.0.2
 pip install starfile==0.5.10
 pip install dynamotable==0.2.4
+pip install numpy==1.26.4
+pip install pandas==2.2.3
 pip install numexpr==2.8.4
 pip install bottleneck==1.3.6
 ```
