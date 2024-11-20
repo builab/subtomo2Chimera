@@ -115,6 +115,7 @@ The subtomogram average name is avg.mrc by default. You need to adjust the level
 The output ChimeraX loading script uses a lot of memory due to many subtomograms rendering. Therefore, try to make the avg.mrc file as small as possible. It doesn't have to be the same pixel size as the star file data. You can use further binning/tight crop and then input the pixel size & box size of the subtomogram average into the command
 
 Update: v0.1 2022/05/03 Now you can customize the subtomo avg name & the offset is now correct.
+
 Update: v0.11 2022/06/08 Fix the index for non-sorted star file. Also can use --relion31 flag for doing Relion3.1 file directly.
 
 
@@ -127,7 +128,7 @@ The shift after the rotation = RotationMatrix*-HalfBoxSize + CoordinateOfSubtomo
 
 
 **NOTE 2:**
-Script only works with relion 4.0 star file.
+Script only works with relion 4.0 and 3.1 star file.
 
 ## How to run:
 1. Prepare the input files: Relion star file from Refine3D job (Should be at least 3.1 and up), the binned out subtomogram average avg.mrc (size ~1Mb). For Dynamo, table & tomogram doc file, the binned out subtomogram average avg.mrc.
