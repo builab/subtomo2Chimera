@@ -56,12 +56,12 @@ Not required option
 
 ## dynamotable2ChimeraX.py Usage:
 ```
-python dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load_tomo.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" --tomoname CU428_TS013_rec.mrc
+python dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load_tomo.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" --tomoname SPEF1MT2_004_rec.mrc
 ```
 
 *--i* Input table file
 
-*--tomoDoc* Input tomo doc file
+*--tomoDoc* Input tomo doc file (better to keep only tomoname, not full path)
 
 *--o* Output ChimeraX Loading Script
 
@@ -145,7 +145,7 @@ python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cx
 For dynamo command
 
 ```
-python dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load_tomo.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" --tomoname CU428_TS013_rec.mrc
+python dynamotable2ChimeraX.py --tomoDoc tomograms.doc --i aligned.tbl --o load_tomo.cxc --avgAngpix 8.48 --tomoAngpix 8.48 --avgBoxSize "128,128,15" --tomoname SPEF1MT2_004_rec.mrc
 ```
 
 3. Edit the ChimeraX loading script for proper level of the map and open the output script in Chimera using commandline or interface:
