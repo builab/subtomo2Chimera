@@ -1,7 +1,9 @@
-# subtomo2Chimera v0.2 2022/06/23
+# subtomo2Chimera v0.20 2024/11/20
 
 Convert Dynamo table, relion 4.0 (3.1) star file to script to visualize in ChimeraX
 Now can do in batch instead of manually doing every tomogram.
+
+Updated: Tested with starfile==0.5.10, eulerangles==1.0.2, dynamotable==0.2.4, numpy==1.26.4, pandas==2.2.3, numexpr==2.8.4, bottleneck==1.3.6
 
 ## Citation
 Please cite subtomo2Chimera code repository DOI [10.5281/zenodo.6820119](https://doi.org/10.5281/zenodo.6820119)
@@ -13,9 +15,11 @@ Please cite subtomo2Chimera code repository DOI [10.5281/zenodo.6820119](https:/
 If you use dynamotable2ChimeraX.py, you need to also install [dynamotable](https://pypi.org/project/dynamotable/)
 
 ```
-pip install eulerangles
-pip install starfile
-pip install dynamotable
+pip install eulerangles==1.0.2
+pip install starfile==0.5.10
+pip install dynamotable==0.2.4
+pip install numexpr==2.8.4
+pip install bottleneck==1.3.6
 ```
 
 ## relionsubtomo2ChimeraX.py Usage:

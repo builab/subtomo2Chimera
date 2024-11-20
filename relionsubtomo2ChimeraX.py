@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-v0.1
+v0.2
 Created on Sat Dec  4 22:56:14 2021
 
 Script to convert Relion 4.0 star file to visualization script in Chimera/ChimeraX
@@ -9,6 +9,7 @@ Need to install eulerangles, starfile (pip install eulerangles, pip install star
 Need to adjust level after in the chimera script
 2022/05/05 Add stl compatible script
 2022/06/09 Reset dataframe index to take care of star file not sorted by rlnTomoName or rlnMicrographName
+2024/11/20 Update with pandas 2
 Usage: relionsubtomo2ChimeraX.py --i run_data.star --o load_chimera.cmd --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
 @author: Huy Bui, McGill University
 """
