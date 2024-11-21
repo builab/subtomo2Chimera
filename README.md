@@ -1,9 +1,14 @@
-# subtomo2Chimera v0.20 2024/11/20
+# subtomo2Chimera v0.30 2024/11/20
 
 Convert Dynamo table, relion 4.0 (3.1) star file to script to visualize in ChimeraX
 Now can do in batch instead of manually doing every tomogram.
 
 Updated: Tested with starfile==0.5.10, eulerangles==1.0.2, dynamotable==0.2.4, numpy==1.26.4, pandas==2.2.3, numexpr==2.8.4, bottleneck==1.3.6
+
+## Release note v0.30
+Use volume channel instead of separate volumes
+
+Use modular functions so it is easier to modify
 
 ## Citation
 Please cite subtomo2Chimera code repository DOI [10.5281/zenodo.6820119](https://doi.org/10.5281/zenodo.6820119)
