@@ -3,6 +3,9 @@
 Convert Dynamo table, relion 4.0 (3.1) star file to script to visualize in ChimeraX
 Now can do in batch instead of manually doing every tomogram.
 
+NOTE: Having a bug with model 1 when using offset.
+NOTE2: Need to do volume channel so that adjusting 1 tomogram will change everything else.
+
 Updated: Tested with starfile==0.5.10, eulerangles==1.0.2, dynamotable==0.2.4, numpy==1.26.4, pandas==2.2.3, numexpr==2.8.4, bottleneck==1.3.6
 
 ## Release note v0.30
