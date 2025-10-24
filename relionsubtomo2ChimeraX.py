@@ -43,7 +43,8 @@ def write_cxc_file(output_filename, dftomo, avg_filename, avg_angpix, box_size, 
             origin_angst = origin * angpix - shift_angst
             t1 = np.matmul(rotm, -radius_angst.transpose())
             adj_origin_angst = origin_angst + t1
-
+			
+            print(adj_origin_angst)
             out.write(
                 f'view matrix mod #{offset + 1}.{i + offset + 1},'
                 f'{rotm[0, 0]:.2f},{rotm[0, 1]:.2f},{rotm[0, 2]:.2f},{adj_origin_angst[0]:.2f},'
