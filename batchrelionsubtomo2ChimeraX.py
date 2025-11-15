@@ -26,6 +26,7 @@ if __name__ == '__main__':
     parser.add_argument('--level', help='Level of subtomo avg', required=False, default=0.0039)
     parser.add_argument('--offset', help='Offset of volume number', required=False, default=0)
     parser.add_argument('--relion31', help='Star file from Relion 3.1 (1 or 0)', required=False, default=0)
+    parser.add_argument('--coordAngpix', type=float, help='Pixel size of subtomogram coordinate', default=-1, required=False)
 
     args = parser.parse_args()
     output_prefix = args.o.replace(".cxc", "")
@@ -49,6 +50,12 @@ if __name__ == '__main__':
         else:
             angpix = df_optics.loc[0, 'rlnImagePixelSize']
             dftomo = df_particles[df_particles.rlnMicrographName == tomo_name].copy()
+            
+        # Overwrite pixel size if provided
+        if args.coordAngpix > 0:
+            angpix = args.coordAngpix
+
+        print (f"Use coordinate pixel size of {angpix:.2f} Angstrom")
 
         dftomo.reset_index(drop=True, inplace=True)
         output_filename = f"{output_prefix}_{tomo_name}.cxc"

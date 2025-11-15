@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-v0.3 - Refactored
+v0.31 - Refactored
 Created on Sat Dec  4 22:56:14 2021
 
 Script to convert Relion 4.0 star file to visualization script in Chimera/ChimeraX.
 Updated with reusable `write_cxc_file` function for modularity.
-Usage: relionsubtomo2ChimeraX.py --i run_data.star --o load_chimera.cmd --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1
+Usage: relionsubtomo2ChimeraX.py --i run_data.star --o load_chimera.cmd --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1 --angpix 6.3
 @author: Huy Bui, McGill University
 """
 
@@ -43,8 +43,8 @@ def write_cxc_file(output_filename, dftomo, avg_filename, avg_angpix, box_size, 
             origin_angst = origin * angpix - shift_angst
             t1 = np.matmul(rotm, -radius_angst.transpose())
             adj_origin_angst = origin_angst + t1
-			
-            print(adj_origin_angst)
+            
+            #print(adj_origin_angst)
             out.write(
                 f'view matrix mod #{offset + 1}.{i + offset + 1},'
                 f'{rotm[0, 0]:.2f},{rotm[0, 1]:.2f},{rotm[0, 2]:.2f},{adj_origin_angst[0]:.2f},'
@@ -70,6 +70,7 @@ if __name__ == '__main__':
     parser.add_argument('--level', help='Level of subtomo avg', required=False, default=0.0039)
     parser.add_argument('--offset', help='Offset of volume number', required=False, default=0)
     parser.add_argument('--relion31', help='Star file from Relion 3.1 (1 or 0)', required=False, default=0)
+    parser.add_argument('--coordAngpix', type=float, help='Pixel size of subtomogram coordinate', default=-1, required=False)
 
     args = parser.parse_args()
     output_filename = args.o
@@ -88,12 +89,19 @@ if __name__ == '__main__':
 
     # Select tomogram data based on Relion version
     if relion31 == 0:
+        # This logic is only true with Relion 4.0, not 5.0 or Warp
         angpix = df_optics.loc[0, 'rlnTomoTiltSeriesPixelSize']
         dftomo = df_particles[df_particles.rlnTomoName == tomo_name].copy()
     else:
         angpix = df_optics.loc[0, 'rlnImagePixelSize']
         dftomo = df_particles[df_particles.rlnMicrographName == tomo_name].copy()
 
+    # Overwrite pixel size if provided
+    if args.coordAngpix > 0:
+        angpix = args.coordAngpix
+
+    print (f"Use coordinate pixel size of {angpix:.2f} Angstrom")
+    
     # Reset index to ensure proper indexing
     dftomo.reset_index(drop=True, inplace=True)
 

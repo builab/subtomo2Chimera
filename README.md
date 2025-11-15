@@ -1,6 +1,6 @@
-# subtomo2Chimera v0.30 2024/11/20
+# subtomo2Chimera v0.31 2025/11/15
 
-Convert Dynamo table, relion 4.0 (3.1) star file to script to visualize in ChimeraX
+Convert Dynamo table, relion 4.0, 5.0 and Warp (3.1) star file to script to visualize in ChimeraX
 Now can do in batch instead of manually doing every tomogram.
 
 NOTE: Having a bug with model 1 when using offset.
@@ -8,10 +8,12 @@ NOTE2: Need to do volume channel so that adjusting 1 tomogram will change everyt
 
 Updated: Tested with starfile==0.5.10, eulerangles==1.0.2, dynamotable==0.2.4, numpy==1.26.4, pandas==2.2.3, numexpr==2.8.4, bottleneck==1.3.6
 
-## Release note v0.30
+## Release note v0.31
 Use volume channel instead of separate volumes
 
 Use modular functions so it is easier to modify
+
+Added --angpix to overwrite the info from star file to avoid confusion Warp, Relion 4 and 5 star file
 
 ## Citation
 Please cite subtomo2Chimera code repository DOI [10.5281/zenodo.6820119](https://doi.org/10.5281/zenodo.6820119)
@@ -62,6 +64,9 @@ Not required option
 
 *--relion31* (default 0) Relion 3.1 or Relion 4.0 (1 or 0 value).
 
+*--coordAngpix* (default -1) Use this pixel size of coordinate to overwrite information from the star file. Very useful if the starfile not directly from Warp.
+
+
 
 
 ## dynamotable2ChimeraX.py Usage:
@@ -101,7 +106,7 @@ python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc
 
 For Relion 3.1
 ```
-python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --relion31 1
+python batchrelionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --relion31 1 --coordAngpix 2.62
 
 ```
 
@@ -144,13 +149,13 @@ Script only works with relion 4.0 and 3.1 star file.
 2. Generate the ChimeraX loading script for a specific tomogram using the above command
 
 ```
-python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1* 
+python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1 --coordAngpix 2.62* 
 ```
 
 Full command
 
 ```
-python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1 --level 0.0039 --avgFileName avg.mrc --offset 0* 
+python relionsubtomo2ChimeraX.py --i run_data_empiar10064.star --o load_tomo1.cxc --avgAngpix 10.48 --avgBoxSize "64,64,64" --tomoname CTEM_tomo1 --level 0.0039 --avgFileName avg.mrc --offset 0 --coordAngpix 2.62* 
 ```
 
 For dynamo command
