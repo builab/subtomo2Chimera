@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-v0.31 - Refactored
+v0.32 - Added support for star files without optics table
 Created on Sat Dec  4 22:56:14 2021
 
 Script to convert Relion 4.0 star file to visualization script in Chimera/ChimeraX.
@@ -39,14 +39,21 @@ def write_cxc_file(output_filename, dftomo, avg_filename, avg_angpix, box_size, 
             eulers_relion = row[['rlnAngleRot', 'rlnAngleTilt', 'rlnAnglePsi']].to_list()
             rotm = euler2matrix(eulers_relion, axes='zyz', intrinsic=True, right_handed_rotation=True).transpose()
             origin = row[['rlnCoordinateX', 'rlnCoordinateY', 'rlnCoordinateZ']].to_numpy()
-            shift_angst = row[['rlnOriginXAngst', 'rlnOriginYAngst', 'rlnOriginZAngst']].to_numpy()
-            origin_angst = origin * angpix - shift_angst
+            
+            # Check if origin shift columns exist
+            if all(col in row.index for col in ['rlnOriginXAngst', 'rlnOriginYAngst', 'rlnOriginZAngst']):
+                shift_angst = row[['rlnOriginXAngst', 'rlnOriginYAngst', 'rlnOriginZAngst']].to_numpy()
+                origin_angst = origin * angpix - shift_angst
+            else:
+                # No shift columns, use origin directly
+                origin_angst = origin * angpix
+            
             t1 = np.matmul(rotm, -radius_angst.transpose())
             adj_origin_angst = origin_angst + t1
             
             #print(adj_origin_angst)
             out.write(
-                f'view matrix mod #{offset + 1}.{i + offset + 1},'
+                f'view matrix mod #{offset + 1}.{i + 1},'
                 f'{rotm[0, 0]:.2f},{rotm[0, 1]:.2f},{rotm[0, 2]:.2f},{adj_origin_angst[0]:.2f},'
                 f'{rotm[1, 0]:.2f},{rotm[1, 1]:.2f},{rotm[1, 2]:.2f},{adj_origin_angst[1]:.2f},'
                 f'{rotm[2, 0]:.2f},{rotm[2, 1]:.2f},{rotm[2, 2]:.2f},{adj_origin_angst[2]:.2f}\n'
@@ -84,23 +91,57 @@ if __name__ == '__main__':
 
     # Load Relion star file
     stardict = starfile.read(args.i)
-    df_optics = stardict['optics']
-    df_particles = stardict['particles']
+    
+    # Check if optics table exists
+    has_optics = 'optics' in stardict
+    df_particles = stardict['particles'] if 'particles' in stardict else stardict
+    
+    # Default angpix value
+    angpix = None
 
-    # Select tomogram data based on Relion version
-    if relion31 == 0:
-        # This logic is only true with Relion 4.0, not 5.0 or Warp
-        angpix = df_optics.loc[0, 'rlnTomoTiltSeriesPixelSize']
-        dftomo = df_particles[df_particles.rlnTomoName == tomo_name].copy()
+    # Select tomogram data based on star file structure
+    if has_optics:
+        df_optics = stardict['optics']
+        
+        if relion31 == 0:
+            # Relion 4.0 format
+            if 'rlnTomoTiltSeriesPixelSize' in df_optics.columns:
+                angpix = df_optics.loc[0, 'rlnTomoTiltSeriesPixelSize']
+            dftomo = df_particles[df_particles.rlnTomoName == tomo_name].copy()
+        else:
+            # Relion 3.1 format
+            if 'rlnImagePixelSize' in df_optics.columns:
+                angpix = df_optics.loc[0, 'rlnImagePixelSize']
+            dftomo = df_particles[df_particles.rlnMicrographName == tomo_name].copy()
     else:
-        angpix = df_optics.loc[0, 'rlnImagePixelSize']
-        dftomo = df_particles[df_particles.rlnMicrographName == tomo_name].copy()
+        # No optics table - try to get pixel size from particles table
+        print("Warning: No optics table found in star file")
+        
+        if relion31 == 0 and 'rlnTomoName' in df_particles.columns:
+            dftomo = df_particles[df_particles.rlnTomoName == tomo_name].copy()
+        elif 'rlnMicrographName' in df_particles.columns:
+            dftomo = df_particles[df_particles.rlnMicrographName == tomo_name].copy()
+        else:
+            print("Error: Could not identify tomogram name column")
+            exit(1)
+        
+        # Try to find pixel size in particles table
+        if 'rlnTomoTiltSeriesPixelSize' in df_particles.columns:
+            angpix = df_particles.loc[0, 'rlnTomoTiltSeriesPixelSize']
+        elif 'rlnImagePixelSize' in df_particles.columns:
+            angpix = df_particles.loc[0, 'rlnImagePixelSize']
 
-    # Overwrite pixel size if provided
+    # Overwrite pixel size if provided via command line
     if args.coordAngpix > 0:
         angpix = args.coordAngpix
+    
+    # Check if we have a valid pixel size
+    if angpix is None:
+        print("Error: Could not determine pixel size from star file.")
+        print("Please provide pixel size using --coordAngpix argument")
+        exit(1)
 
-    print (f"Use coordinate pixel size of {angpix:.2f} Angstrom")
+    print(f"Use coordinate pixel size of {angpix:.2f} Angstrom")
     
     # Reset index to ensure proper indexing
     dftomo.reset_index(drop=True, inplace=True)
